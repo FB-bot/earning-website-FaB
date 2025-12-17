@@ -3,9 +3,14 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT"
+  apiKey: "AIzaSyC3jRKvD4EBSjoXQb7y0pig37OTX-jAaus",
+  authDomain: "fack-91063.firebaseapp.com",
+  databaseURL: "https://fack-91063-default-rtdb.firebaseio.com",
+  projectId: "fack-91063",
+  storageBucket: "fack-91063.appspot.com",
+  messagingSenderId: "330070086876",
+  appId: "1:330070086876:web:1e72b86a0cc91f353c5019",
+  measurementId: "G-FRXT6LCKQQ"
 };
 
 const app = initializeApp(firebaseConfig);
