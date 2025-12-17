@@ -11,40 +11,34 @@ import {
 
 let sec = 15;
 let active = true;
+let started = false;
 
-// ❌ tab change হলে cancel
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) active = false;
 });
 
-// 🔥 WAIT FOR AUTH FIRST
-auth.onAuthStateChanged(async (user) => {
-  if (!user) {
-    alert("Please login first");
-    location.href = "index.html";
-    return;
-  }
+const btn = document.getElementById("showAdBtn");
 
-  await loadAdAndStart(user);
-});
+btn.onclick = async () => {
+  if (started) return;
+  started = true;
 
-async function loadAdAndStart(user) {
-  // ✅ adsConfig read
   const cfgSnap = await getDoc(doc(db, "adsConfig", "main"));
-  if (!cfgSnap.exists()) {
-    alert("Ads config missing");
-    return;
-  }
-
   const cfg = cfgSnap.data();
 
-  if (!cfg.adsEnabled) {
-    alert("Ads disabled");
-    return;
-  }
+  // 🔥 Dynamically create script
+  const s = document.createElement("script");
+  s.src = cfg.monetagScript
+    .replace('<script src="', '')
+    .replace('"></script>', '');
 
-  document.getElementById("adBox").innerHTML = cfg.monetagScript;
+  document.body.appendChild(s);
 
+  // ⏱ Start timer AFTER click
+  startTimer(cfg.rewardPerAd);
+};
+
+function startTimer(reward) {
   const t = setInterval(async () => {
     if (!active) {
       clearInterval(t);
@@ -52,22 +46,22 @@ async function loadAdAndStart(user) {
       return;
     }
 
-    document.getElementById("timer").innerText = sec--;
+    timer.innerText = sec--;
+
     if (sec < 0) {
       clearInterval(t);
 
-      // ✅ update user balance
-      await updateDoc(doc(db, "users", user.uid), {
-        balance: increment(cfg.rewardPerAd),
+      await updateDoc(doc(db, "users", auth.currentUser.uid), {
+        balance: increment(reward),
         totalAdsWatched: increment(1)
       });
 
       await addDoc(collection(db, "adHistory"), {
-        uid: user.uid,
+        uid: auth.currentUser.uid,
         time: serverTimestamp()
       });
 
-      alert("✅ Reward Added");
+      alert("✅ Reward added");
     }
   }, 1000);
 }
