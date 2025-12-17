@@ -1,7 +1,37 @@
-<div class="box">
-  <h3>📢 Watch Ad</h3>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>Watch Ad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <button id="showAdBtn">▶️ Click to Show Ad</button>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-  <p>⏱ <span id="timer">15</span> seconds</p>
-</div>
+  <div class="box">
+    <h2>📢 Watch Ad</h2>
+    <p>নিচের বাটনে ক্লিক করে বিজ্ঞাপন দেখুন</p>
+
+    <!-- 🔥 USER ACTION BUTTON -->
+    <button id="showAdBtn" class="btn">
+      ▶️ Click to Show Ad
+    </button>
+
+    <br><br>
+
+    <!-- TIMER -->
+    <p>⏱ সময় বাকি: <span id="timer">15</span> সেকেন্ড</p>
+
+    <!-- OPTIONAL INFO -->
+    <small>
+      ⚠️ বিজ্ঞাপন চলাকালীন ট্যাব পরিবর্তন করলে আয় যোগ হবে না
+    </small>
+  </div>
+
+  <!-- MAIN JS -->
+  <script type="module" src="js/watchAd.js"></script>
+
+</body>
+</html>
